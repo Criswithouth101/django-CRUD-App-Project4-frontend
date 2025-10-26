@@ -1,0 +1,133 @@
+/* src/styles/theme.css */
+
+/* ========== CSS Variables (your palette) ========== */
+:root {
+  --bg: #F8E9D2;          /* parchment background */
+  --ink: #2D3142;         /* charcoal text */
+  --primary: #6B705C;     /* olive green */
+  --secondary: #CB997E;   /* dusty rose */
+  --accent: #FFD166;      /* wheat / highlight */
+  --paper: #FFF9F4;       /* card background */
+  --shadow: 0 6px 12px rgba(0,0,0,0.15);
+  --radius: 14px;
+}
+
+/* ========== Base / Typography ========== */
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  font-family: 'Quicksand', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+h1, h2, h3, .display-1, .display-2, .navbar-brand {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+/* ========== Layout helpers ========== */
+.container-narrow {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* ========== Card look ========== */
+.paper-card {
+  background: var(--paper);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+}
+
+/* ========== Buttons ========== */
+.btn-primary {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+.btn-primary:hover {
+  filter: brightness(1.05);
+}
+
+.btn-accent {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #3b3b3b;
+}
+.btn-accent:hover {
+  filter: brightness(0.97);
+}
+
+/* ========== Links ========== */
+a, .link {
+  color: var(--primary);
+  text-decoration: none;
+}
+a:hover, .link:hover {
+  color: var(--secondary);
+  text-decoration: underline;
+}
+
+/* ========== Navbar (cozy wood-ish) ========== */
+.navbar {
+  background-color: var(--secondary) !important;
+  box-shadow: var(--shadow);
+}
+.navbar .navbar-brand {
+  color: var(--paper) !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.navbar .nav-link {
+  color: var(--paper) !important;
+  margin-right: .5rem;
+}
+.navbar .nav-link:hover {
+  color: var(--accent) !important;
+}
+
+/* ========== Forms ========== */
+.form-control, .form-select, textarea, input {
+  border-radius: 10px !important;
+  border: 1px solid #e5d8c9 !important;
+  background: #fffdf9 !important;
+}
+.form-control:focus, .form-select:focus, textarea:focus, input:focus {
+  border-color: var(--secondary) !important;
+  box-shadow: 0 0 0 .2rem rgba(203,153,126,0.25) !important;
+}
+
+/* ========== Subtle section headers ========== */
+.section-title {
+  color: var(--primary);
+  font-family: 'Playfair Display', Georgia, serif;
+  margin-bottom: .75rem;
+}
+
+/* ========== “Book card” style ========== */
+.book-card {
+  background: var(--paper);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem 1.25rem;
+  transition: transform .08s ease-out;
+  border: 1px solid #eadfd3;
+}
+.book-card:hover {
+  transform: translateY(-1px);
+}
+
+/* ========== Review list items ========== */
+.review-item {
+  background: #fffdf9;
+  border: 1px solid #eadfd3;
+  border-radius: 12px;
+  padding: .75rem .9rem;
+  margin-bottom: .5rem;
+}
