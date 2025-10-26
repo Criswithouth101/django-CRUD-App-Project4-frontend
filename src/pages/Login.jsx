@@ -15,7 +15,7 @@ function Login() {
   try {
     await loginUser(form);
     alert("Login successful!");
-    window.dispatchEvent(new Event("storage")); // 👈 force navbar update
+    window.dispatchEvent(new Event("storage")); 
     navigate("/books");
   } catch (err) {
     alert("Invalid credentials");
