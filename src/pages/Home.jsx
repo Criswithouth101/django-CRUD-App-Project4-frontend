@@ -1,4 +1,6 @@
 import logo from "../assets/the-Literaalley-logo.png";
+import React from "react";
+import BookSearch from "../components/BookSearch";
 
 export default function Home() {
   return (
@@ -13,7 +15,13 @@ export default function Home() {
                     style={{ objectFit: "contain" }}
                   />
         <p className="lead">An alley full of books — where stories live and readers wander.</p>
-        <a className="btn btn-accent mt-2" href="/books">Browse Books</a>
+        <a className="btn btn-accent mt-2" href="/books">Public Book Alley</a>
+        <div>
+      <h1 className="text-2xl font-bold text-center mt-6 mb-4">
+        Book Explorer 📚
+      </h1>
+      <BookSearch />
+    </div>
       </div>
     </div>
   );

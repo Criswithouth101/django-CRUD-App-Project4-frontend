@@ -34,7 +34,7 @@ export default function NavBar() {
       <div className="navbar-nav ms-auto">
         {token ? (
           <>
-            <Link className="nav-link" to="/books"> Book List</Link>
+            <Link className="nav-link" to="/books"> My Book List</Link>
             <Link className="nav-link" to="/add-book">Add Book</Link>
             <button className="btn btn-outline-light ms-2" onClick={handleLogout}>
               Logout

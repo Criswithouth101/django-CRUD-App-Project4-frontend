@@ -86,15 +86,23 @@ function BookDetail() {
 
         {/* Show edit/delete only if current user owns the book */}
         {user && Number(user) === Number(book.owner_id) && (
-      <div className="mt-3">
+      <div className="mt- d-flex gap-3">
         <button
-          className="btn btn-outline-primary me-2"
+          className="btn btn-outline-success shadow-sm fw-semibold"
+          style={{
+            borderRadius: "12px",
+            borderWidth: "2px",
+            fontFamily: "'Cormorant Garamond', serif",
+            letterSpacing: "0.05px",
+            backgroundColor: "#ff1e9",
+          }}
+        
           onClick={() => navigate(`/books/${id}/edit`)}
         >
-          Edit
+          Edit Book
         </button>
         <button className="btn btn-outline-danger" onClick={handleDelete}>
-          Delete
+          Delete Book
         </button>
       </div>
 )}

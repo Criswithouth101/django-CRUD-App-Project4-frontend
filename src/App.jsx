@@ -11,8 +11,6 @@ import NavBar from "./components/NavBar";
 import EditBook from "./pages/EditBook";
 
 
-
-
 function App() {
 
   return (
