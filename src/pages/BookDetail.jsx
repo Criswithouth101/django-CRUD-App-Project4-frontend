@@ -1,19 +1,50 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 function BookDetail() {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [reviewForm, setReviewForm] = useState({ rating: "", content: "" });
+  const [user, setUser] = useState(null);
 
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  // Decode token to get user info (simplified)
+  useEffect(() => {
+  if (token) {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    console.log("🧍 USER ID FROM TOKEN:", payload.sub);
+    setUser(payload.sub);
+  }
+}, [token]);
+
 
   useEffect(() => {
-    API.get(`/api/books/${id}/`)
-      .then(res => setBook(res.data))
-      .catch(err => console.error("Error loading book:", err));
-  }, [id]);
+  API.get(`/api/books/${id}/`)
+    .then(res => {
+      console.log("📘 BOOK DATA:", res.data);
+      setBook(res.data);
+    })
+    .catch(err => console.error("Error loading book:", err));
+}, [id]);
+
+
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this book?")) {
+      try {
+        await API.delete(`/api/books/${id}/`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        alert("Book deleted.");
+        navigate("/books");
+      } catch (err) {
+        console.error("Error deleting book:", err);
+        alert("Failed to delete book.");
+      }
+    }
+  };
 
   const handleChange = (e) => {
     setReviewForm({ ...reviewForm, [e.target.name]: e.target.value });
@@ -27,16 +58,17 @@ function BookDetail() {
     }
 
     try {
-      await API.post(`/api/books/${id}/reviews/`, reviewForm, {
-        rating: parseInt(reviewForm.rating, 10),
-        content: reviewForm.content,
-        }, {
-        headers: { Authorization: `Bearer ${token}` }
-        });
-
-      // reload reviews
+      await API.post(
+        `/api/books/${id}/reviews/`,
+        {
+          rating: parseInt(reviewForm.rating, 10),
+          content: reviewForm.content,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       const res = await API.get(`/api/books/${id}/`);
       setBook(res.data);
+      setReviewForm({ rating: "", content: "" });
     } catch (err) {
       console.error("Error submitting review:", err);
       alert("Error adding review.");
@@ -52,9 +84,26 @@ function BookDetail() {
       <p>{book.description}</p>
       <p><strong>Price:</strong> ${book.price}</p>
 
+        {/* Show edit/delete only if current user owns the book */}
+        {user && Number(user) === Number(book.owner_id) && (
+      <div className="mt-3">
+        <button
+          className="btn btn-outline-primary me-2"
+          onClick={() => navigate(`/books/${id}/edit`)}
+        >
+          Edit
+        </button>
+        <button className="btn btn-outline-danger" onClick={handleDelete}>
+          Delete
+        </button>
+      </div>
+)}
+
+
+
       <hr />
       <h4>Reviews</h4>
-      {book.reviews && book.reviews.length > 0 ? (
+      {book.reviews?.length ? (
         <ul className="list-group">
           {book.reviews.map((r) => (
             <li key={r.id} className="list-group-item">
@@ -94,7 +143,7 @@ function BookDetail() {
                 required
               ></textarea>
             </div>
-            <button className="btn btn-primary">Submit Review</button>
+            <button className="btn btn-success">Submit Review</button>
           </form>
         </div>
       )}
@@ -103,3 +152,4 @@ function BookDetail() {
 }
 
 export default BookDetail;
+
