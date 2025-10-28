@@ -13,9 +13,11 @@ export default function NavBar() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
+  localStorage.removeItem('token');
+  setToken(null);
+  navigate('/login');
+};
+
 
   return (
     <nav className="navbar navbar-expand-lg bg-light shadow-sm px-3">

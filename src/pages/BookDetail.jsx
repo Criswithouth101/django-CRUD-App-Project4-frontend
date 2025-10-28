@@ -63,6 +63,7 @@ function BookDetail() {
         {
           rating: parseInt(reviewForm.rating, 10),
           content: reviewForm.content,
+          book: id, 
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
